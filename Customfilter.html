@@ -1,0 +1,80 @@
+<html ng-app="FilterApp">
+    <head>
+        <script src="https://code.angularjs.org/1.6.1/angular.min.js"></script>
+
+        <script>
+            var app = angular.module("FilterApp",[]);
+
+            app.controller("MonthsController",function(){
+                var ctrl = this;
+                ctrl.allMonths = ["January","February","March","April","May","June","July",
+                                    "September","October","November","December"];
+
+
+
+            });
+
+            app.filter("monthFilter",function(){
+
+                return function(month , language){
+                   
+                    var englishToHindiMonths =   { 
+                        "January":"Magha",
+                       "February":"Phalguna",
+                       "March":"Chaitra",
+                       "April":"Vaisakha",
+                       "May":"Jyaistha",
+                       "June":"Asadha",
+                       "July":"Shravana",
+                       "August":"Bhadra",
+                        "September":"Asvina",
+                        "October":"Kartika",
+                        "November":"Agrahayana",
+                        "December":"Pausa"
+                        }
+ 
+                    
+
+                    if(language === 'Hindi'){
+
+                        return englishToHindiMonths[month];
+                    }
+
+                }
+
+
+            });
+
+            app.filter("moneyFilter",function(){
+
+                return function(amount){
+                    if(locale === 'US'){
+                    return "$ "+ amount;
+                    }
+                    else if(locale === "IND"){
+                        return "# " + amount;
+                    }
+                }
+
+            })
+
+        </script>
+    </head>
+
+
+    <body>
+        <div ng-controller = "MonthsController as mCtrl">
+
+            <div ng-repeat= "mon in ::mCtrl.allMonths">
+                <input type="checkbox">{{mon | monthFilter:'Hindi'}}
+            </div>
+
+        </div>
+
+
+
+    </body>
+
+
+
+</html>
